@@ -2,6 +2,7 @@ package com.example.myquizfeb4;
                                                                     //submit java file, xml file, and strings.xml as deliverable one also include screenshot of output
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,11 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
 {
+    private Button mCheatButton;
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
+    private static final String KEY_INDEX = "index";
     private static final String TAG="MainActivity";
     private TextView  mQuestionTextView;
     private QuestionBank[] questionBanks = new QuestionBank[]{
@@ -25,10 +28,16 @@ public class MainActivity extends AppCompatActivity
     //this point to current question
     private int currentIndex = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "Inside onCreate");
+        if(savedInstanceState!=null){
+            currentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+        }
         setContentView(R.layout.activity_main);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         updateQuestion();
@@ -36,6 +45,7 @@ public class MainActivity extends AppCompatActivity
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (Button) findViewById(R.id.next_button);
+        mCheatButton = (Button) findViewById(R.id.cheat_button);
         mTrueButton.setOnClickListener(new View.OnClickListener()
         {
            @Override
@@ -73,6 +83,16 @@ public class MainActivity extends AppCompatActivity
 
         });
 
+        mCheatButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+
+            public void onClick (View v){
+                Log.d(TAG, "cheat button pressed");
+                Intent i = new Intent(MainActivity.this, CheatActivity.class);
+                startActivity(i);
+
+            }
+        });
 
     }
 
@@ -81,27 +101,26 @@ public class MainActivity extends AppCompatActivity
     protected void onStart(){
         super.onStart();
         Log.d(TAG, "Inside Onstart");
-
     }
     @Override
     protected void onRestart(){
         super.onRestart();
-        Log.d(TAG, "Inside Onstart");
+        Log.d(TAG, "Inside OnRestart");
 
     }    @Override
     protected void onResume(){
         super.onResume();
-        Log.d(TAG, "Inside Onstart");
+        Log.d(TAG, "Inside OnResume");
 
     }    @Override
     protected void onDestroy(){
         super.onDestroy();
-        Log.d(TAG, "Inside Onstart");
+        Log.d(TAG, "Inside OnDestroy");
 
     }    @Override
     protected void onPause(){
         super.onPause();
-        Log.d(TAG, "Inside Onstart");
+        Log.d(TAG, "Inside OnPause");
 
     }
 
@@ -109,6 +128,11 @@ public class MainActivity extends AppCompatActivity
         int questionNo= questionBanks[currentIndex].getQuestion();
         mQuestionTextView.setText(questionNo);
 
+    }
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(TAG,"Inside onSavedInstance");
+        savedInstanceState.putInt(KEY_INDEX, currentIndex);
     }
 
     private void checkAnswer(boolean userPressedTrue){

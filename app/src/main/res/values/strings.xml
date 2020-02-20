@@ -1,12 +1,14 @@
 <resources>
-<string name="app_name">MyQuizFeb4</string>
-<string name="questions_1">Is 19 a prime number?</string>
-<string name="questions_2">Is 29 a prime number?</string>
-<string name="questions_3">Is 39 a prime number?</string>
-<string name="questions_4">Is 49 a prime number?</string>
-<string name="true_button">True</string>
-<string name="false_button">False</string>
-<string name="correct_toast">Correct</string>
-<string name="incorrect_toast">InCorrect</string>
-<string name="next_button">Next</string>
+    <string name="app_name">MyQuizFeb4</string>
+    <string name="questions_1">Is 19 a prime number?</string>
+    <string name="questions_2">Is 29 a prime number?</string>
+    <string name="questions_3">Is 39 a prime number?</string>
+    <string name="questions_4">Is 49 a prime number?</string>
+    <string name="true_button">True</string>
+    <string name="false_button">False</string>
+    <string name="correct_toast">Correct</string>
+    <string name="incorrect_toast">InCorrect</string>
+    <string name="next_button">Next</string>
+    <string name="cheat_button">Hint</string>
+    <string name="cheat_text_view">Hint View</string>
 </resources>
