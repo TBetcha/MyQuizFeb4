@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick (View v){
                 Log.d(TAG, "cheat button pressed");
                 Intent i = new Intent(MainActivity.this, CheatActivity.class);
+                i.putExtra("name", "troy");
                 startActivity(i);
 
             }
