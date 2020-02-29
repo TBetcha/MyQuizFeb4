@@ -10,13 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static java.util.Optional.of;
+
 public class MainActivity extends AppCompatActivity
 {
+    private boolean mCheated = false;
     private Button mCheatButton;
     private Button mTrueButton;
     private Button mFalseButton;
     private Button mNextButton;
     private static final String KEY_INDEX = "index";
+    private static final int REQUEST_CODE_CHEAT = 1;
     private static final String TAG="MainActivity";
     private TextView  mQuestionTextView;
     private QuestionBank[] questionBanks = new QuestionBank[]{
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity
         if(savedInstanceState!=null){
             currentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
         }
+
         setContentView(R.layout.activity_main);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         updateQuestion();
@@ -90,13 +95,25 @@ public class MainActivity extends AppCompatActivity
                 Log.d(TAG, "cheat button pressed");
                 Intent i = new Intent(MainActivity.this, CheatActivity.class);
                 i.putExtra("name", "troy");
-                startActivity(i);
+                i.putExtra("number",currentIndex);
+               // startActivity(i);
+                startActivityForResult(i,REQUEST_CODE_CHEAT);
 
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode==RESULT_OK) if (requestCode == REQUEST_CODE_CHEAT) {
+            if (data != null) {
+                mCheated = CheatActivity.wasCheatShown(data);
+                Log.d(TAG,"Is cheated activity called");
+            }
+        }
+    }
 
     @Override
     protected void onStart(){
@@ -112,6 +129,8 @@ public class MainActivity extends AppCompatActivity
     protected void onResume(){
         super.onResume();
         Log.d(TAG, "Inside OnResume");
+        Log.d(TAG, "Did use cheat"+ mCheated);
+
 
     }    @Override
     protected void onDestroy(){

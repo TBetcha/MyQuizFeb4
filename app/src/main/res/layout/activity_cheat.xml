@@ -11,6 +11,12 @@
         android:padding="24dp"
         android:text="Im a cheat"/>
 
+    <TextView
+        android:id="@+id/name_text_view"
+        android:layout_width="123dp"
+        android:layout_height="46dp"
+        android:text="TextView" />
+
 </LinearLayout>
 
 
