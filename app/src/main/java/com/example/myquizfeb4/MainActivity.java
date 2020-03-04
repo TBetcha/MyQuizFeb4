@@ -94,8 +94,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick (View v){
                 Log.d(TAG, "cheat button pressed");
                 Intent i = new Intent(MainActivity.this, CheatActivity.class);
+                boolean b = questionBanks[currentIndex].checkQuestionAnswer();
                 i.putExtra("name", "troy");
                 i.putExtra("number",currentIndex);
+                i.putExtra("TRUE_FALSE", b);
                // startActivity(i);
                 startActivityForResult(i,REQUEST_CODE_CHEAT);
 
@@ -158,9 +160,12 @@ public class MainActivity extends AppCompatActivity
     private void checkAnswer(boolean userPressedTrue){
         boolean questionAnswer = questionBanks[currentIndex].checkQuestionAnswer();
         int messageResID=0;
+        if(mCheated){
+            messageResID = R.string.cheat_toast;
+        }else{
         if(userPressedTrue==questionAnswer){
             messageResID=R.string.correct_toast;}
-        else{
+        else
             messageResID=R.string.incorrect_toast;}
         Toast.makeText(this,messageResID,Toast.LENGTH_SHORT).show();
         }

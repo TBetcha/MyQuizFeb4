@@ -5,16 +5,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 public class CheatActivity extends AppCompatActivity {
     private static final String TAG = "Cheat Activity";
 
+    private TextView mCheatAnswerTextView;
+    private Button mShowCheatButton;
     private String name;
     private int questionNo;
-    private TextView nameTextView;
+  //  private TextView nameTextView;
     private boolean ischeated = false;
+    private boolean ischeatedButtonPressed = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,10 +32,22 @@ public class CheatActivity extends AppCompatActivity {
             if (extras != null) {
                 name = extras.getString("name");
                 questionNo = extras.getInt("number");
+                ischeatedButtonPressed = extras.getBoolean("TRUE_FALSE", false);
                 Log.d(TAG, name);
                 Log.d(TAG,String.valueOf(questionNo));
-                nameTextView = findViewById(R.id.name_text_view);
-                nameTextView.setText(name);
+                mCheatAnswerTextView = findViewById(R.id.cheat_answer_text_view);
+                mShowCheatButton = findViewById(R.id.show_cheat_button);
+                mShowCheatButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(ischeatedButtonPressed){
+                            mCheatAnswerTextView.setText(R.string.true_button);
+                        }else{
+                            mCheatAnswerTextView.setText(R.string.false_button);
+                        }
+                    }
+                });
+            //    nameTextView.setText(name);
             }/*else{
                 nameTextView = findViewById(R.id.name_text_view);
                 nameTextView.setText(name);
@@ -41,9 +58,10 @@ public class CheatActivity extends AppCompatActivity {
                 }
             }*/
 
-            nameTextView = findViewById(R.id.name_text_view);
-            nameTextView.setText(name);
-            if(questionNo>=0){
+            mCheatAnswerTextView = findViewById(R.id.cheat_answer_text_view);
+         //   nameTextView.setText(name);
+         //   if(questionNo>=0)
+            {
                 ischeated=true;
             }
 

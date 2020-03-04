@@ -1,21 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android = "http://schemas.android.com/apk/res/android"
+    xmlns:tools ="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     android:gravity = "center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingLeft="16dp"
+    android:paddingBottom="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:layout_gravity="center">
     <TextView
         android:id="@+id/activity_cheat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="24dp"
-        android:text="Im a cheat"/>
+        android:text="@string/cheat_warning_text_view"/>
 
     <TextView
-        android:id="@+id/name_text_view"
+        android:id="@+id/cheat_answer_text_view"
         android:layout_width="123dp"
         android:layout_height="46dp"
-        android:text="TextView" />
+        android:text="TextView"
+        tools:text="Answer"/>
+    <Button
+        android:id="@+id/show_cheat_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/show_cheat_button" />
 
 </LinearLayout>
 
