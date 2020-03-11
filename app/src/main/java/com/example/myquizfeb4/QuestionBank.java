@@ -5,6 +5,7 @@ public class QuestionBank {
     //declare instance var.
     private int question;
     private boolean trueQuestion;
+    private boolean cheated = false;
 
     //define constructors
     public QuestionBank(int question, boolean trueQuestion) {

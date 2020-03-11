@@ -13,6 +13,9 @@ import android.widget.TextView;
 public class CheatActivity extends AppCompatActivity {
     private static final String TAG = "Cheat Activity";
 
+
+    public int cheatScore;
+    public int score;
     private TextView mCheatAnswerTextView;
     private Button mShowCheatButton;
     private String name;
@@ -24,7 +27,6 @@ public class CheatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cheat);
-
         Log.d(TAG, "On create");
 
         if (savedInstanceState == null) {
@@ -32,22 +34,23 @@ public class CheatActivity extends AppCompatActivity {
             if (extras != null) {
                 name = extras.getString("name");
                 questionNo = extras.getInt("number");
+                score = extras.getInt("score");
                 ischeatedButtonPressed = extras.getBoolean("TRUE_FALSE", false);
                 Log.d(TAG, name);
-                Log.d(TAG,String.valueOf(questionNo));
+                Log.d(TAG, String.valueOf(questionNo));
                 mCheatAnswerTextView = findViewById(R.id.cheat_answer_text_view);
                 mShowCheatButton = findViewById(R.id.show_cheat_button);
                 mShowCheatButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if(ischeatedButtonPressed){
+                        if (ischeatedButtonPressed) {
                             mCheatAnswerTextView.setText(R.string.true_button);
-                        }else{
+                        } else {
                             mCheatAnswerTextView.setText(R.string.false_button);
                         }
                     }
                 });
-            //    nameTextView.setText(name);
+                //    nameTextView.setText(name);
             }/*else{
                 nameTextView = findViewById(R.id.name_text_view);
                 nameTextView.setText(name);
@@ -59,14 +62,19 @@ public class CheatActivity extends AppCompatActivity {
             }*/
 
             mCheatAnswerTextView = findViewById(R.id.cheat_answer_text_view);
-         //   nameTextView.setText(name);
-         //   if(questionNo>=0)
+            //   nameTextView.setText(name);
+            //   if(questionNo>=0)
             {
-                ischeated=true;
+                ischeated = true;
+                if (ischeated) {
+                     cheatScore = score;
+
+                }
             }
 
         }
     }
+
 
     protected static boolean wasCheatShown(Intent i){
         return i.getBooleanExtra("Is cheated", false);
@@ -75,6 +83,7 @@ public class CheatActivity extends AppCompatActivity {
     private void setAnswerResult(boolean b){
         Intent i = getIntent();
         i.putExtra("Is cheated", b );
+        i.putExtra("score",cheatScore );
         setResult(RESULT_OK, i);
     }
 

@@ -7,14 +7,21 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static java.lang.String.valueOf;
 import static java.util.Optional.of;
 
 public class MainActivity extends AppCompatActivity
 {
+
+    public boolean first = true;
+    public  int newScore=0;
+    private boolean ansRight = false;
     private boolean mCheated = false;
+    private TextView mUserScore;
     private Button mCheatButton;
     private Button mTrueButton;
     private Button mFalseButton;
@@ -32,25 +39,33 @@ public class MainActivity extends AppCompatActivity
     //this point to current question
     private int currentIndex = 0;
 
+    public Score myScore = new Score(0);
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         Log.d(TAG, "Inside onCreate");
         if(savedInstanceState!=null){
             currentIndex = savedInstanceState.getInt(KEY_INDEX, 0);
+            getIntent().getExtras().getInt("score");                //TODO This wasnt here
         }
+
 
         setContentView(R.layout.activity_main);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
-        updateQuestion();
         //identify button here - this is links to xml file
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (Button) findViewById(R.id.next_button);
+        mUserScore = (TextView) findViewById(R.id.user_score);
         mCheatButton = (Button) findViewById(R.id.cheat_button);
+        updateQuestion();
         mTrueButton.setOnClickListener(new View.OnClickListener()
         {
            @Override
@@ -58,6 +73,9 @@ public class MainActivity extends AppCompatActivity
            {
                 //button action here
               checkAnswer(true);
+              Log.d(TAG, "score is: "+ valueOf(newScore));
+
+
 
             }
         });
@@ -67,6 +85,10 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 //button action here
                checkAnswer(false);
+               Log.d(TAG, "score is: "+ valueOf(newScore));
+
+
+
 
             }
         });
@@ -98,6 +120,8 @@ public class MainActivity extends AppCompatActivity
                 i.putExtra("name", "troy");
                 i.putExtra("number",currentIndex);
                 i.putExtra("TRUE_FALSE", b);
+                i.putExtra("score", newScore);
+
                // startActivity(i);
                 startActivityForResult(i,REQUEST_CODE_CHEAT);
 
@@ -132,6 +156,14 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         Log.d(TAG, "Inside OnResume");
         Log.d(TAG, "Did use cheat"+ mCheated);
+        if(first = true) {
+            newScore = myScore.getScore();
+            myScore.setScore(newScore - 1);
+            first = false;
+        } else if (first = false) {
+            newScore = myScore.getScore();
+            myScore.setScore(newScore+1);
+        }
 
 
     }    @Override
@@ -149,6 +181,7 @@ public class MainActivity extends AppCompatActivity
     void updateQuestion(){
         int questionNo= questionBanks[currentIndex].getQuestion();
         mQuestionTextView.setText(questionNo);
+        ansRight = false;
 
     }
     public void onSaveInstanceState(Bundle savedInstanceState){
@@ -157,17 +190,35 @@ public class MainActivity extends AppCompatActivity
         savedInstanceState.putInt(KEY_INDEX, currentIndex);
     }
 
+    /*public void showScore(int userScore){
+        mUserScore.setText(userScore);
+    }*/
+
+
+
+
+
     private void checkAnswer(boolean userPressedTrue){
         boolean questionAnswer = questionBanks[currentIndex].checkQuestionAnswer();
         int messageResID=0;
         if(mCheated){
             messageResID = R.string.cheat_toast;
         }else{
-        if(userPressedTrue==questionAnswer){
-            messageResID=R.string.correct_toast;}
+        if(userPressedTrue==questionAnswer)
+        {
+            messageResID=R.string.correct_toast;
+                 newScore = myScore.getScore()+1;
+                myScore.setScore(newScore);
+                first = false;
+                ansRight = true;
+
+        }
         else
             messageResID=R.string.incorrect_toast;}
         Toast.makeText(this,messageResID,Toast.LENGTH_SHORT).show();
+
         }
+
     }
+
 
