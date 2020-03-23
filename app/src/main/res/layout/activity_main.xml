@@ -10,7 +10,7 @@
         android:id="@+id/user_score"
         android:layout_width="62dp"
         android:layout_height="wrap_content"
-        tools:visibility="visible" />
+        android:text="@string/zero" />
 
     <TextView
         android:id="@+id/question_text_view"

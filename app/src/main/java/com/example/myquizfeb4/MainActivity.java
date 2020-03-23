@@ -18,7 +18,8 @@ public class MainActivity extends AppCompatActivity
 {
 
     public boolean first = true;
-    public  int newScore=0;
+    private int lastScore;
+    private  int newScore=1;
     private boolean ansRight = false;
     private boolean mCheated = false;
     private TextView mUserScore;
@@ -36,17 +37,23 @@ public class MainActivity extends AppCompatActivity
             new QuestionBank(R.string.questions_3,false),
             new QuestionBank(R.string.questions_4,false)
     };
+
+    private Score[] scores = new Score[]{
+            new Score(0, "0"),
+            new Score(1, " 1"),
+            new Score(2, "2")
+    };
     //this point to current question
     private int currentIndex = 0;
 
-    public Score myScore = new Score(0);
+    public Score myScore = new Score(0, "zero");
 
 
 
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
+    protected void onCreate(final Bundle savedInstanceState)
     {
 
         super.onCreate(savedInstanceState);
@@ -58,14 +65,16 @@ public class MainActivity extends AppCompatActivity
 
 
         setContentView(R.layout.activity_main);
+        mUserScore = (TextView) findViewById(R.id.user_score);
         mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
         //identify button here - this is links to xml file
         mTrueButton = (Button) findViewById(R.id.true_button);
         mFalseButton = (Button) findViewById(R.id.false_button);
         mNextButton = (Button) findViewById(R.id.next_button);
-        mUserScore = (TextView) findViewById(R.id.user_score);
         mCheatButton = (Button) findViewById(R.id.cheat_button);
         updateQuestion();
+
+
         mTrueButton.setOnClickListener(new View.OnClickListener()
         {
            @Override
@@ -74,7 +83,8 @@ public class MainActivity extends AppCompatActivity
                 //button action here
               checkAnswer(true);
               Log.d(TAG, "score is: "+ valueOf(newScore));
-
+               String finalScore = scores[newScore].getNumber();
+               mUserScore.setText(finalScore);
 
 
             }
@@ -86,11 +96,12 @@ public class MainActivity extends AppCompatActivity
                 //button action here
                checkAnswer(false);
                Log.d(TAG, "score is: "+ valueOf(newScore));
+               String finalScore = scores[newScore].getNumber();
+               mUserScore.setText(finalScore);
 
 
 
-
-            }
+           }
         });
 
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -166,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         }
 
 
+
     }    @Override
     protected void onDestroy(){
         super.onDestroy();
@@ -178,6 +190,18 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+/*    private void makeScore(String score){
+        lastScore = (newScore);
+        updateScore();
+
+
+    }
+
+    void updateScore(){
+        int showMe = lastScore;
+        mUserScore.setText(showMe);
+    }*/
+
     void updateQuestion(){
         int questionNo= questionBanks[currentIndex].getQuestion();
         mQuestionTextView.setText(questionNo);
@@ -189,10 +213,6 @@ public class MainActivity extends AppCompatActivity
         Log.i(TAG,"Inside onSavedInstance");
         savedInstanceState.putInt(KEY_INDEX, currentIndex);
     }
-
-    /*public void showScore(int userScore){
-        mUserScore.setText(userScore);
-    }*/
 
 
 
