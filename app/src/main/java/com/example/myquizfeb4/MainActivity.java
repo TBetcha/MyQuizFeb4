@@ -35,13 +35,29 @@ public class MainActivity extends AppCompatActivity
             new QuestionBank(R.string.questions_1,true),
             new QuestionBank(R.string.questions_2,true),
             new QuestionBank(R.string.questions_3,false),
-            new QuestionBank(R.string.questions_4,false)
+            new QuestionBank(R.string.questions_4,false),
+            new QuestionBank(R.string.questions_5, true),
+            new QuestionBank(R.string.questions_6,false),
+            new QuestionBank(R.string.questions_7, true),
+            new QuestionBank(R.string.questions_8,true),
+            new QuestionBank(R.string.questions_9, false),
+            new QuestionBank(R.string.questions_10,true)
+
     };
 
     private Score[] scores = new Score[]{
             new Score(0, "0"),
             new Score(1, " 1"),
-            new Score(2, "2")
+            new Score(2, "2"),
+            new Score (3, "3"),
+            new Score (4,"4"),
+            new Score (5, "5"),
+            new Score (6, "6"),
+            new Score (7,"7"),
+            new Score (8, "8"),
+            new Score (9, "9"),
+            new Score (10,"10"),
+            new Score (11, "11")
     };
     //this point to current question
     private int currentIndex = 0;
@@ -84,8 +100,11 @@ public class MainActivity extends AppCompatActivity
               checkAnswer(true);
               Log.d(TAG, "score is: "+ valueOf(newScore));
                String finalScore = scores[newScore].getNumber();
-               mUserScore.setText(finalScore);
-
+               if((scores[newScore].getNumber().equals(scores[10].getNumber()))){
+                   youWin();
+               }else {
+                   mUserScore.setText(finalScore);
+               }
 
             }
         });
@@ -98,6 +117,11 @@ public class MainActivity extends AppCompatActivity
                Log.d(TAG, "score is: "+ valueOf(newScore));
                String finalScore = scores[newScore].getNumber();
                mUserScore.setText(finalScore);
+               if((scores[newScore].getNumber().equals(scores[10].getNumber()))){
+                   youWin();
+               }else {
+                   mUserScore.setText(finalScore);
+               }
 
 
 
@@ -132,6 +156,7 @@ public class MainActivity extends AppCompatActivity
                 i.putExtra("number",currentIndex);
                 i.putExtra("TRUE_FALSE", b);
                 i.putExtra("score", newScore);
+                mCheated = true;
 
                // startActivity(i);
                 startActivityForResult(i,REQUEST_CODE_CHEAT);
@@ -169,7 +194,11 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "Did use cheat"+ mCheated);
         if(first = true) {
             newScore = myScore.getScore();
-            myScore.setScore(newScore - 1);
+            myScore.setScore(newScore);
+            first = false;
+        }else if(first&&mCheated) {
+            newScore = myScore.getScore()-1;
+            myScore.setScore(newScore);
             first = false;
         } else if (first = false) {
             newScore = myScore.getScore();
@@ -190,17 +219,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-/*    private void makeScore(String score){
-        lastScore = (newScore);
-        updateScore();
 
-
-    }
-
-    void updateScore(){
-        int showMe = lastScore;
-        mUserScore.setText(showMe);
-    }*/
 
     void updateQuestion(){
         int questionNo= questionBanks[currentIndex].getQuestion();
@@ -214,6 +233,9 @@ public class MainActivity extends AppCompatActivity
         savedInstanceState.putInt(KEY_INDEX, currentIndex);
     }
 
+    private void youWin(){
+        Toast.makeText(this,"You Win! Close the game and start over!", Toast.LENGTH_LONG).show();
+    }
 
 
 
@@ -223,6 +245,7 @@ public class MainActivity extends AppCompatActivity
         int messageResID=0;
         if(mCheated){
             messageResID = R.string.cheat_toast;
+            mCheated = false;
         }else{
         if(userPressedTrue==questionAnswer)
         {
@@ -231,14 +254,18 @@ public class MainActivity extends AppCompatActivity
                 myScore.setScore(newScore);
                 first = false;
                 ansRight = true;
+                mCheated = false;
 
         }
         else
             messageResID=R.string.incorrect_toast;}
         Toast.makeText(this,messageResID,Toast.LENGTH_SHORT).show();
+        mCheated =false;
 
         }
 
     }
+
+
 
 

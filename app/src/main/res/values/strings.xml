@@ -17,4 +17,10 @@
     <string name="zero">0</string>
     <string name="one">1</string>
     <string name="two">2</string>
+    <string name="questions_5">Is 59 a prime number?</string>
+    <string name="questions_6">Is 69 a prime number?</string>
+    <string name="questions_7">Is 79 a prime number?</string>
+    <string name="questions_8">Is 89 a prime number?</string>
+    <string name="questions_9">Is 99 a prime number?</string>
+    <string name="questions_10">Is 109 a prime number?</string>
 </resources>
