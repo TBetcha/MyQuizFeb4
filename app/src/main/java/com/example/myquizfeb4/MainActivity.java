@@ -42,7 +42,8 @@ public class MainActivity extends AppCompatActivity
             new QuestionBank(R.string.questions_8,true),
             new QuestionBank(R.string.questions_9, false),
             new QuestionBank(R.string.questions_10,true),
-            new QuestionBank(R.string.questions_11,false)
+            new QuestionBank(R.string.questions_11, false),
+            new QuestionBank(R.string.questions_12, false)
 
     };
 
@@ -82,13 +83,13 @@ public class MainActivity extends AppCompatActivity
 
 
         setContentView(R.layout.activity_main);
-        mUserScore = (TextView) findViewById(R.id.user_score);
-        mQuestionTextView = (TextView) findViewById(R.id.question_text_view);
+        mUserScore = findViewById(R.id.user_score);
+        mQuestionTextView = findViewById(R.id.question_text_view);
         //identify button here - this is links to xml file
-        mTrueButton = (Button) findViewById(R.id.true_button);
-        mFalseButton = (Button) findViewById(R.id.false_button);
-        mNextButton = (Button) findViewById(R.id.next_button);
-        mCheatButton = (Button) findViewById(R.id.cheat_button);
+        mTrueButton = findViewById(R.id.true_button);
+        mFalseButton = findViewById(R.id.false_button);
+        mNextButton = findViewById(R.id.next_button);
+        mCheatButton = findViewById(R.id.cheat_button);
         updateQuestion();
 
 
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity
            {
                 //button action here
               checkAnswer(true);
-              Log.d(TAG, "score is: "+ valueOf(newScore));
+               Log.d(TAG, "score is: " + newScore);
                String finalScore = scores[newScore].getNumber();
                if((scores[newScore].getNumber().equals(scores[10].getNumber()))){
                    youWin();
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 //button action here
                checkAnswer(false);
-               Log.d(TAG, "score is: "+ valueOf(newScore));
+               Log.d(TAG, "score is: " + newScore);
                String finalScore = scores[newScore].getNumber();
                mUserScore.setText(finalScore);
                if((scores[newScore].getNumber().equals(scores[10].getNumber()))){
