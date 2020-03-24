@@ -41,7 +41,8 @@ public class MainActivity extends AppCompatActivity
             new QuestionBank(R.string.questions_7, true),
             new QuestionBank(R.string.questions_8,true),
             new QuestionBank(R.string.questions_9, false),
-            new QuestionBank(R.string.questions_10,true)
+            new QuestionBank(R.string.questions_10,true),
+            new QuestionBank(R.string.questions_11,false)
 
     };
 
